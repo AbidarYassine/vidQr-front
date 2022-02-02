@@ -39,16 +39,8 @@ export default function Collection() {
         sort: true,
       },
     }, {
-      name: "price",
-      label: "Price",
-      options: {
-        filter: true,
-        sort: true,
-      },
-    },
-    {
-      name: "category",
-      label: "Category",
+      name: "description",
+      label: "description",
       options: {
         filter: true,
         sort: true,

@@ -22,6 +22,7 @@ import IconsPage from "../../pages/icons";
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
+import VideoForm from "../forms/VideoForm";
 
 
 function Layout(props) {
@@ -44,6 +45,7 @@ function Layout(props) {
             <Route path="/app/dashboard" component={Dashboard} />
             <Route path="/app/users" component={Users} />
             <Route path="/app/collections" component={Collection} />
+            <Route path="/app/addvideo" component={VideoForm} />
             <Route path="/app/icons" component={IconsPage} />
           </Switch>
         </div>

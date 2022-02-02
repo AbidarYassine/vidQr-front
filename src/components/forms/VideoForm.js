@@ -1,0 +1,182 @@
+import * as React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import TextField from '@mui/material/TextField';
+import '../../styles/main/index.css';
+import { Button, Divider, IconButton, InputLabel, MenuItem, Select } from '@material-ui/core';
+import ImageUpload from 'image-upload-react'
+import { doc } from 'prettier';
+import axios from "axios";
+import { PhotoCamera, Videocam } from '@material-ui/icons';
+
+export default function VideoForm() {
+    //handle image uploader
+    const [imageSrc, setImageSrc] = React.useState("")
+
+    const handleImageSelect = (e) => {
+        setImageSrc(URL.createObjectURL(e.target.files[0]))
+        setVideo({ ...video, image_src: e.target.files[0] });
+    }
+
+
+    //handle video uploader
+
+    const [link, setLink] = React.useState("");
+
+    const handleVideoSelect = (e) => {
+        setLink(e.target.files[0].name);
+        setVideo({ ...video, url: e.target.files[0] });
+    };
+
+    //form building
+    const api_url = "http://localhost:8080/vidqr/collections/";
+    const api_url_video = "http://localhost:8080/vidqr/video/";
+    const [collections, setCollections] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [video, setVideo] = React.useState({
+        name: "",
+        url: "",
+        image_src: null,
+        collection: "",
+    });
+
+    React.useEffect(() => {
+        getData();
+    }, []);
+
+    const getData = () => {
+        fetch(api_url)
+            .then(res => res.json())
+            .then(json => setCollections(json));
+    };
+    //handle submit form
+
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+
+    const handleChangeForm = (e) => {
+        e.preventDefault();
+        if (e.target.name === "image_src") setVideo({ ...video, image_src: e.target.files[0] });
+        else {
+            setVideo({ ...video, [e.target.name]: e.target.value });
+        }
+        console.log("video ", video);
+    }
+
+    const handleChangeFormSelect = (e) => {
+        e.preventDefault();
+        setVideo({ ...video, collection: e.target.value });
+        console.log("video ", video);
+    }
+
+    const handleSubmit = async (e) => {
+        setIsLoading(true);
+        e.preventDefault();
+        let image_src = await toBase64(video.image_src);
+        let url = await toBase64(video.url);
+        image_src = image_src.toString().replace(/^data:(.*,)?/, "");
+        url = image_src.toString().replace(/^data:(.*,)?/, "");
+        const { name, collection } = video;
+        await axios.post(api_url_video + "savevideo/idCollection/" + collection, { name, url, image_src });
+        setIsLoading(false);
+    };
+    return (
+        <React.Fragment>
+            <CssBaseline />
+            <Container maxWidth="xl">
+                <Box sx={{ bgcolor: '#ebeeff', height: 'auto', borderRadius: '.90rem' }} >
+                    <form onSubmit={handleSubmit}>
+                        <h1 className='form-title'>Add new Video</h1>
+                        <Divider />
+                        <h3 className='form-subtitle'>General informations</h3>
+                        <Divider />
+                        <div className='form-container-fields'>
+                            <TextField
+                                onChange={handleChangeForm}
+                                className="form-text-field"
+                                id="standard-required"
+                                label="Video Title"
+                                variant="standard"
+                            />
+                            <TextField
+                                onChange={handleChangeForm}
+                                className="form-text-field"
+                                id="standard-required"
+                                label="Video Description"
+                                variant="standard"
+                            />
+                            <InputLabel style={{ width: '50vw' }} id="demo-simple-select-label">collections</InputLabel>
+                            <Select
+                                style={{ width: '50vw' }}
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                label="collection"
+                                onChange={handleChangeFormSelect}
+                            >
+                                {collections.map((element, i) => {
+                                    console.log(element);
+                                    // Affichage
+                                    return (
+
+                                        <MenuItem value={element.id}>{element.name}</MenuItem>
+
+                                    );
+                                })}
+                            </Select>
+                        </div>
+                        <Divider />
+                        <h3 className='form-subtitle'>Uploads</h3>
+                        <Divider />
+                        <div className='form-container-fields'>
+
+
+                            <ImageUpload
+                                id="image-upload"
+                                className="image-uploader"
+                                handleImageSelect={handleImageSelect}
+                                imageSrc={imageSrc}
+                                setImageSrc={setImageSrc}
+                                style={{
+                                    width: 250,
+                                    height: 200,
+                                    background: 'rgb(83 109 254)',
+                                    borderRadius: '.90rem'
+                                }}
+                            />
+                            <label className='image-upload-title' for="image-upload"> Video thumbnail
+                            </label>
+
+
+                            <input
+                                accept="video/*"
+                                capture="camcorder"
+                                id="icon-button-video"
+                                type="file"
+                                onChange={handleVideoSelect}
+                                className='video-input'
+                            />
+                            <label htmlFor="icon-button-video">
+                                <IconButton color="primary" component="span">
+                                    <Videocam />
+                                </IconButton>
+                                {link}
+                            </label>
+
+                        </div>
+
+
+
+                        <div className='form-container-fields '>
+                            <Button type='submit' className=' mb-d1 submit-form-button' variant="contained" color='red'>Save video</Button>
+                        </div>
+                    </form>
+                </Box>
+            </Container>
+        </React.Fragment>
+    );
+}
