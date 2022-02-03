@@ -37,6 +37,7 @@ export default function VideoForm() {
     const [video, setVideo] = React.useState({
         name: "",
         url: "",
+        description: "",
         image_src: null,
         collection: "",
     });
@@ -80,7 +81,7 @@ export default function VideoForm() {
         let image_src = await toBase64(video.image_src);
         let url = await toBase64(video.url);
         image_src = image_src.toString().replace(/^data:(.*,)?/, "");
-        url = image_src.toString().replace(/^data:(.*,)?/, "");
+        url = url.toString().replace(/^data:(.*,)?/, "");
         const { name, collection } = video;
         await axios.post(api_url_video + "savevideo/idCollection/" + collection, { name, url, image_src });
         setIsLoading(false);
@@ -101,14 +102,16 @@ export default function VideoForm() {
                                 className="form-text-field"
                                 id="standard-required"
                                 label="Video Title"
-                                variant="standard"
+                                variant="outlined"
+                                name="name"
                             />
                             <TextField
                                 onChange={handleChangeForm}
                                 className="form-text-field"
                                 id="standard-required"
                                 label="Video Description"
-                                variant="standard"
+                                variant="outlined"
+                                name='description'
                             />
                             <InputLabel style={{ width: '50vw' }} id="demo-simple-select-label">collections</InputLabel>
                             <Select
@@ -117,13 +120,13 @@ export default function VideoForm() {
                                 id="demo-simple-select"
                                 label="collection"
                                 onChange={handleChangeFormSelect}
+                                name='collections'
                             >
                                 {collections.map((element, i) => {
                                     console.log(element);
                                     // Affichage
                                     return (
-
-                                        <MenuItem value={element.id}>{element.name}</MenuItem>
+                                        <MenuItem key={element.id} value={element.id}>{element.name}</MenuItem>
 
                                     );
                                 })}

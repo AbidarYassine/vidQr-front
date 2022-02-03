@@ -66,3 +66,8 @@
 .video-input{
     display: none !important;
 }
+
+.demo-simple-select{
+    width: 50vw;
+    margin: 10px auto 10px !important;
+}
