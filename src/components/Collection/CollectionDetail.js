@@ -26,18 +26,16 @@ const CollectionDetail = () => {
   }, []);
   if (isLoading) return (
     <>
-      <h2>Loading ...</h2>
       <CircularProgress size={30}
                         sx={{
                           color: "#06b0ac",
                           zIndex: 1,
                         }} />
+      <h2>Loading ...</h2>
     </>
   );
   return (
     <>
-
-
       <Container className="container">
         <div className="collection-image-container">
           <img src={collection?.image_src} alt="No Image" />
