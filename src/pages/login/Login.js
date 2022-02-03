@@ -35,12 +35,26 @@ function Login(props) {
   const [nameValue, setNameValue] = useState("");
   const [loginValue, setLoginValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
+  const [isLogin, SetIsLogin] = useState();
+  const loginMethod = () => {
+    loginUser(
+      userDispatch,
+      loginValue,
+      passwordValue,
+      props.history,
+      setIsLoading,
+      setError,
+    ).then(res => {
+      console.log("res ", res);
+      setIsLoading(res);
+    });
+  };
 
   return (
     <Grid container className={classes.container}>
       <div className={classes.logotypeContainer}>
         <img src={logo} alt="logo" className={classes.logotypeImage} />
-        <Typography className={classes.logotypeText}>Admin</Typography>
+        <Typography className={classes.logotypeText}> VIDQR<sup>©</sup></Typography>
       </div>
       <div className={classes.formContainer}>
         <div className={classes.form}>
@@ -52,22 +66,10 @@ function Login(props) {
             centered
           >
             <Tab label="Login" classes={{ root: classes.tab }} />
-            <Tab label="New User" classes={{ root: classes.tab }} />
+            {/*<Tab label="New User" classes={{ root: classes.tab }} />*/}
           </Tabs>
           {activeTabId === 0 && (
             <React.Fragment>
-              <Typography constiant="h1" className={classes.greeting}>
-                Good Morning, User
-              </Typography>
-              <Button size="large" className={classes.googleButton}>
-                <img src={google} alt="google" className={classes.googleIcon} />
-                &nbsp;Sign in with Google
-              </Button>
-              <div className={classes.formDividerContainer}>
-                <div className={classes.formDivider} />
-                <Typography className={classes.formDividerWord}>or</Typography>
-                <div className={classes.formDivider} />
-              </div>
               <Fade in={error}>
                 <Typography color="secondary" className={classes.errorMessage}>
                   Something is wrong with your login or password :(
@@ -112,14 +114,7 @@ function Login(props) {
                       loginValue.length === 0 || passwordValue.length === 0
                     }
                     onClick={() =>
-                      loginUser(
-                        userDispatch,
-                        loginValue,
-                        passwordValue,
-                        props.history,
-                        setIsLoading,
-                        setError,
-                      )
+                      loginMethod()
                     }
                     constiant="contained"
                     color="primary"
@@ -128,13 +123,6 @@ function Login(props) {
                     Login
                   </Button>
                 )}
-                <Button
-                  color="primary"
-                  size="large"
-                  className={classes.forgetButton}
-                >
-                  Forget Password
-                </Button>
               </div>
             </React.Fragment>
           )}
@@ -244,11 +232,6 @@ function Login(props) {
             </React.Fragment>
           )}
         </div>
-        <Typography color="primary" className={classes.copyright}>
-          © 2014-{new Date().getFullYear()} <a style={{ textDecoration: "none", color: "inherit" }}
-                                               href="https://flatlogic.com" rel="noopener noreferrer"
-                                               target="_blank">Flatlogic</a>, LLC. All rights reserved.
-        </Typography>
       </div>
     </Grid>
   );

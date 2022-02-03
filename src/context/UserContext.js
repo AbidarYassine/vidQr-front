@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Alert } from "@mui/material";
 
 const UserStateContext = React.createContext();
 const UserDispatchContext = React.createContext();
@@ -9,6 +10,8 @@ function userReducer(state, action) {
     case "LOGIN_SUCCESS":
       return { ...state, isAuthenticated: true };
     case "SIGN_OUT_SUCCESS":
+      return { ...state, isAuthenticated: false };
+    case "LOGIN_FAILURE":
       return { ...state, isAuthenticated: false };
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -53,22 +56,30 @@ export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
 async function loginUser(dispatch, login, password, history, setIsLoading, setError) {
   setError(false);
   setIsLoading(true);
-
-  const res = await axios.post("http://localhost:8081/users/login", { username: login, password });
-  console.log("response ", res);
-  if (res.status >= 200 && res.status <= 299) {
-    localStorage.setItem("token", res.data.token);
-    localStorage.setItem("username", res.data.user.username);
-    localStorage.setItem("role", res.data.user.role);
-    setError(null);
-    setIsLoading(false);
-    dispatch({ type: "LOGIN_SUCCESS" });
-    history.push("/app/dashboard");
-  } else {
+  try {
+    const res = await axios.post("https://auth-security.herokuapp.com/users/login", { username: login, password });
+    if (res.status >= 200 && res.status <= 299) {
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("username", res.data.user.username);
+      localStorage.setItem("role", res.data.user.role);
+      setError(null);
+      setIsLoading(false);
+      dispatch({ type: "LOGIN_SUCCESS" });
+      history.push("/app/dashboard");
+    } else {
+      console.log("error ", res);
+      dispatch({ type: "LOGIN_FAILURE" });
+      setError(true);
+      setIsLoading(false);
+      return false;
+    }
+  } catch (e) {
     dispatch({ type: "LOGIN_FAILURE" });
     setError(true);
     setIsLoading(false);
+    return false;
   }
+
 }
 
 function signOut(dispatch, history) {
