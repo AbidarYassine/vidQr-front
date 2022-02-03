@@ -34,7 +34,7 @@ import VideoForm from "../../components/forms/VideoForm";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-const api = "https://gateway-service-api.herokuapp.com/vidqr/collections/";
+const api = "http://localhost:8080/vidqr/collections/";
 
 export default function Collection() {
 
@@ -67,6 +67,7 @@ export default function Collection() {
   };
   const getData = async () => {
     const token = localStorage.getItem("token");
+    console.log("Token ", token);
     const res = await axios.get(api, {
       headers: {
         "Authorization": `Bearer ${token}`,
