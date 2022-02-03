@@ -18,7 +18,7 @@ function userReducer(state, action) {
 
 function UserProvider({ children }) {
   const [state, dispatch] = React.useReducer(userReducer, {
-    isAuthenticated: !!localStorage.getItem("id_token"),
+    isAuthenticated: !!localStorage.getItem("token"),
   });
 
   return (

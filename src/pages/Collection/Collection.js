@@ -67,6 +67,7 @@ export default function Collection() {
   };
   const getData = async () => {
     const token = localStorage.getItem("token");
+    console.log("Token ", token);
     const res = await axios.get(api, {
       headers: {
         "Authorization": `Bearer ${token}`,
