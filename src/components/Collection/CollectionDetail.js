@@ -27,10 +27,10 @@ const CollectionDetail = () => {
   if (isLoading) return (
     <>
       <CircularProgress size={30}
-                        sx={{
-                          color: "#06b0ac",
-                          zIndex: 1,
-                        }} />
+        sx={{
+          color: "#06b0ac",
+          zIndex: 1,
+        }} />
       <h2>Loading ...</h2>
     </>
   );
@@ -62,26 +62,9 @@ const CollectionDetail = () => {
           </Grid>
         </Card>
       </Container>
-      <QRCode id_collection={collection.id} videos={collection?.videos} libelle={collection.name} />
+      <QRCode id_collection={collection.id} collection={collection} libelle={collection.name} />
     </>
   );
 };
 
-// const useStyles = makeStyles((theme) => ({
-//   conatiner: {
-//     marginTop: 10
-//   },
-//   title: {
-//     display: 'flex',
-//     justifyContent: 'center',
-//     alignItems:  'center',
-//     background: '#3f51b5',
-//     color: '#fff',
-//     padding: 20
-//   },
-//   btn : {
-//     marginTop: 10,
-//     marginBottom: 20
-//   }
-// }));
 export default CollectionDetail;

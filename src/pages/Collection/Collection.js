@@ -188,13 +188,13 @@ export default function Collection() {
           }} type="submit" onClick={handleSubmit(onSubmit)} className="btn btn-block">
             {
               isLoading ? <CircularProgress size={30}
-                                            sx={{
-                                              color: "#dce9dd",
-                                              position: "absolute",
-                                              top: 4,
-                                              left: 336,
-                                              zIndex: 1,
-                                            }} />
+                sx={{
+                  color: "#dce9dd",
+                  position: "absolute",
+                  top: 4,
+                  left: 336,
+                  zIndex: 1,
+                }} />
                 : (
                   <p>Save</p>
                 )
@@ -213,7 +213,7 @@ export default function Collection() {
   );
   return (
     <>
-      <PageTitle title="Toutes les collections" />
+      <PageTitle title="All the collections" />
       <Stack className="btn-container" spacing={2} direction="row">
         <Button onClick={handleDialog} variant="outlined">Add Collection</Button>
         {
@@ -249,8 +249,8 @@ export default function Collection() {
         </Grid>
       </Grid>
       <DialogCollection card={cardAddVideo} open={openAddVideo} handleDialog={handleDialogAddVideo} transition={Transition} />
-   
+
       <DialogCollection card={card} open={open} handleDialog={handleDialog} transition={Transition} />
-       </>
+    </>
   );
 }

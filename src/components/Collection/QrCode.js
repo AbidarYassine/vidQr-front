@@ -3,17 +3,17 @@ import { Button, Card, CardContent, Container, Grid, TextField } from "@mui/mate
 import "./collectionDetail.css";
 import qrcode from "qrcode";
 
-const QRCode = ({ id_collection, libelle, videos }) => {
+const QRCode = ({ id_collection, libelle, collection }) => {
   const [text, setText] = useState(id_collection || "");
   const [imageUrl, setImageUrl] = useState("");
   const getUrlsVideos = () => {
-    const jsonString = JSON.stringify(videos);
+    const jsonString = JSON.stringify(collection);
+    console.log("collection ",jsonString)
     return jsonString;
   };
   const generateQrCode = async () => {
     try {
       const response = await qrcode.toDataURL(getUrlsVideos());
-      console.log("res ", response);
       setImageUrl(response);
     } catch (error) {
       console.log(error);

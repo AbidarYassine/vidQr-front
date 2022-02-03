@@ -9,6 +9,10 @@ import ImageUpload from 'image-upload-react'
 import { doc } from 'prettier';
 import axios from "axios";
 import { PhotoCamera, Videocam } from '@material-ui/icons';
+import * as Yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Typography } from '@mui/material';
 
 export default function VideoForm() {
     //handle image uploader
@@ -75,7 +79,7 @@ export default function VideoForm() {
         console.log("video ", video);
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmitForm = async (e) => {
         setIsLoading(true);
         e.preventDefault();
         let image_src = await toBase64(video.image_src);
@@ -86,18 +90,36 @@ export default function VideoForm() {
         await axios.post(api_url_video + "savevideo/idCollection/" + collection, { name, url, image_src });
         setIsLoading(false);
     };
+    //handle form
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("name is required"),
+        description: Yup.string().required("description is required"),
+        collections: Yup.string().required("please select a collection"),
+        imageSrc: Yup.string().required("please upload a thumbnail for the video"),
+        videoForm: Yup.mixed().required("please upload a video"),
+    });
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(validationSchema),
+    });
     return (
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="xl">
                 <Box sx={{ bgcolor: '#fff', height: 'auto', borderRadius: '.90rem' }} >
-                    <form onSubmit={handleSubmit}>
+                    <form>
                         <h1 className='form-title'>Add new Video</h1>
                         <Divider />
                         <h3 className='form-subtitle'>General informations</h3>
                         <Divider />
                         <div className='form-container-fields'>
                             <TextField
+                                {...register("name")}
+                                error={errors.name ? true : false}
                                 onChange={handleChangeForm}
                                 className="form-text-field"
                                 id="standard-required"
@@ -105,7 +127,12 @@ export default function VideoForm() {
                                 variant="outlined"
                                 name="name"
                             />
+                            <Typography variant="inherit" className="text-danger">
+                                {errors.name?.message}
+                            </Typography>
                             <TextField
+                                {...register("description")}
+                                error={errors.description ? true : false}
                                 onChange={handleChangeForm}
                                 className="form-text-field"
                                 id="standard-required"
@@ -113,8 +140,13 @@ export default function VideoForm() {
                                 variant="outlined"
                                 name='description'
                             />
+                            <Typography variant="inherit" className="text-danger">
+                                {errors.description?.message}
+                            </Typography>
                             <InputLabel style={{ width: '50vw' }} id="demo-simple-select-label">collections</InputLabel>
                             <Select
+                                {...register("collections")}
+                                error={errors.collections ? true : false}
                                 style={{ width: '50vw' }}
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
@@ -131,6 +163,9 @@ export default function VideoForm() {
                                     );
                                 })}
                             </Select>
+                            <Typography variant="inherit" className="text-danger">
+                                {errors.collections?.message}
+                            </Typography>
                         </div>
                         <Divider />
                         <h3 className='form-subtitle'>Uploads</h3>
@@ -139,6 +174,9 @@ export default function VideoForm() {
 
 
                             <ImageUpload
+                                {...register("imageSrc")}
+                                error={errors.imageSrc ? true : false}
+                                name="imageSrc"
                                 id="image-upload"
                                 className="image-uploader"
                                 handleImageSelect={handleImageSelect}
@@ -151,11 +189,17 @@ export default function VideoForm() {
                                     borderRadius: '.90rem'
                                 }}
                             />
-                            <label className='image-upload-title' htmlFor="image-upload"> Video thumbnail
+                            <label className='image-upload-title' htmlFor="image-upload"> Video thumbnail <Typography variant="inherit" className="text-danger">
+                                {errors.imageSrc?.message}
+                            </Typography>
                             </label>
+                            
 
 
                             <input
+                            ref={register("videoForm")}
+                                error={errors.videoForm ? true : false}
+                                name='video'
                                 accept="video/*"
                                 capture="camcorder"
                                 id="icon-button-video"
@@ -167,17 +211,20 @@ export default function VideoForm() {
                                 <IconButton color="primary" component="span">
                                     <Videocam />
                                 </IconButton>
-                                
+
                                 <label className='image-upload-title' htmlFor="image-upload">{link}
+                                </label>
                             </label>
-                            </label>
+                            <Typography variant="inherit" className="text-danger">
+                                {errors.videoForm?.message}
+                            </Typography>
 
                         </div>
 
 
 
                         <div className='form-container-fields '>
-                            <Button type='submit' className=' mb-d1 submit-form-button' variant="contained" color='red'>Save video</Button>
+                            <Button type='submit' onClick={handleSubmit(handleSubmitForm)} className=' mb-d1 submit-form-button' variant="contained" color='red'>Save video</Button>
                         </div>
                     </form>
                 </Box>
