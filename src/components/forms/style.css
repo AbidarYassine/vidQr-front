@@ -8,6 +8,7 @@
     flex-direction: column;
     align-items: center;
     margin: 10px auto 10px;
+    background-color: #ebeeff;
 }
 .form-title{
     color: #5477c6;
