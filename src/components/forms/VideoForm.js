@@ -34,8 +34,8 @@ export default function VideoForm() {
     };
 
     //form building
-    const api_url = "http://localhost:8081/vidqr/collections/";
-    const api_url_video = "http://localhost:8081/vidqr/video/";
+    const api_url = "http://localhost:8080/vidqr/collections/";
+    const api_url_video = "http://localhost:8080/vidqr/video/";
     const [collections, setCollections] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(false);
     const [video, setVideo] = React.useState({
