@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 const UserStateContext = React.createContext();
 const UserDispatchContext = React.createContext();
@@ -49,19 +50,20 @@ export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
 
 // ###########################################################
 
-function loginUser(dispatch, login, password, history, setIsLoading, setError) {
+async function loginUser(dispatch, login, password, history, setIsLoading, setError) {
   setError(false);
   setIsLoading(true);
 
-  if (!!login && !!password) {
-    setTimeout(() => {
-      localStorage.setItem("id_token", 1);
-      setError(null);
-      setIsLoading(false);
-      dispatch({ type: "LOGIN_SUCCESS" });
-
-      history.push("/app/dashboard");
-    }, 2000);
+  const res = await axios.post("https://gateway-service-api.herokuapp.com/users/login", { username: login, password });
+  console.log("response ", res);
+  if (res.status >= 200 && res.status <= 299) {
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("username", res.data.user.username);
+    localStorage.setItem("role", res.data.user.role);
+    setError(null);
+    setIsLoading(false);
+    dispatch({ type: "LOGIN_SUCCESS" });
+    history.push("/app/collections");
   } else {
     dispatch({ type: "LOGIN_FAILURE" });
     setError(true);
@@ -70,7 +72,9 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError) {
 }
 
 function signOut(dispatch, history) {
-  localStorage.removeItem("id_token");
+  localStorage.removeItem("token");
+  localStorage.removeItem("username");
+  localStorage.removeItem("role");
   dispatch({ type: "SIGN_OUT_SUCCESS" });
   history.push("/login");
 }
