@@ -1,0 +1,68 @@
+
+:root {
+    --display-delete: block;
+}
+.form-container-fields{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px auto 10px;
+}
+.form-title{
+    color: #5477c6;
+    text-align: center;
+}
+
+.form-text-field{
+    width: 50vw;
+    margin: 10px auto 10px !important;
+}
+.form-subtitle{
+    color: #5578c7;
+    font-size: medium;
+    margin-left: 10px;
+
+}
+
+.image-uploader{
+    background: rgb(83 109 254);
+    border-radius: 0.9rem;
+}
+
+.dnuJgB img{
+    border-radius: 0.9rem;
+}
+
+.dnuJgB img:hover{
+    border-radius: 0.9rem;
+}
+
+
+.eQWBcd{
+    display: var(--display-delete) !important;
+    top: 130px !important;
+    right: 90px !important;
+    
+}
+
+
+.eQWBcd svg{
+    
+    color: rgb(245, 60, 28) !important;
+}
+.image-upload-title{
+    margin: 55px auto;
+}
+.submit-form-button{
+    color: rgb(250 250 250 / 87%) !important;
+    background-color: #536dfe !important;
+}
+
+.mb-d1{
+    margin-bottom: 10px !important;
+}
+
+.video-input{
+    display: none !important;
+}
