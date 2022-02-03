@@ -8,10 +8,9 @@
     flex-direction: column;
     align-items: center;
     margin: 10px auto 10px;
-    background-color: #ebeeff;
 }
 .form-title{
-    color: #5477c6;
+    color: #53555a;
     text-align: center;
 }
 
@@ -20,7 +19,7 @@
     margin: 10px auto 10px !important;
 }
 .form-subtitle{
-    color: #5578c7;
+    color: #222222;
     font-size: medium;
     margin-left: 10px;
 

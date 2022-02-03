@@ -22,7 +22,7 @@ export default function VideoForm() {
 
     //handle video uploader
 
-    const [link, setLink] = React.useState("");
+    const [link, setLink] = React.useState("Upload Video");
 
     const handleVideoSelect = (e) => {
         setLink(e.target.files[0].name);
@@ -90,7 +90,7 @@ export default function VideoForm() {
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="xl">
-                <Box sx={{ bgcolor: '#ebeeff', height: 'auto', borderRadius: '.90rem' }} >
+                <Box sx={{ bgcolor: '#fff', height: 'auto', borderRadius: '.90rem' }} >
                     <form onSubmit={handleSubmit}>
                         <h1 className='form-title'>Add new Video</h1>
                         <Divider />
@@ -151,7 +151,7 @@ export default function VideoForm() {
                                     borderRadius: '.90rem'
                                 }}
                             />
-                            <label className='image-upload-title' for="image-upload"> Video thumbnail
+                            <label className='image-upload-title' htmlFor="image-upload"> Video thumbnail
                             </label>
 
 
@@ -167,7 +167,9 @@ export default function VideoForm() {
                                 <IconButton color="primary" component="span">
                                     <Videocam />
                                 </IconButton>
-                                {link}
+                                
+                                <label className='image-upload-title' htmlFor="image-upload">{link}
+                            </label>
                             </label>
 
                         </div>

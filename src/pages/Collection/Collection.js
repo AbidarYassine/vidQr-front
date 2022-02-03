@@ -28,6 +28,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import axios from "axios";
 import ImageUpload from "image-upload-react";
+import DialogCollection from "../../components/Dialogs/DialogCollection";
+import VideoForm from "../../components/forms/VideoForm";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -40,6 +42,7 @@ export default function Collection() {
   const history = useHistory();
   const [collections, setCollections] = useState([]);
   const [open, setOpen] = useState(false);
+  const [openAddVideo, setOpenAddVideo] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
   const [video, setVideo] = useState({
@@ -59,6 +62,9 @@ export default function Collection() {
   };
   const handleDialog = () => {
     setOpen(!open);
+  };
+  const handleDialogAddVideo = () => {
+    setOpenAddVideo(!openAddVideo);
   };
   const getData = () => {
     fetch(api)
@@ -138,7 +144,7 @@ export default function Collection() {
         <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
           Add Collection
         </Typography>
-        <div className="form-container-fields">
+        <div className="form-container-fields-collection">
           <form>
             <TextField
               required
@@ -174,27 +180,6 @@ export default function Collection() {
                 borderRadius: ".90rem",
               }}
             />
-            {/*<FormControlLabel*/}
-            {/*  control={*/}
-            {/*    <Controller*/}
-            {/*      control={control}*/}
-            {/*      name="acceptTerms"*/}
-            {/*      defaultValue="false"*/}
-            {/*      inputRef={register()}*/}
-            {/*      render={({ field: { onChange } }) => (*/}
-            {/*        <Checkbox*/}
-            {/*          color="primary"*/}
-            {/*          onChange={e => onChange(e.target.checked)}*/}
-            {/*        />*/}
-            {/*      )}*/}
-            {/*    />*/}
-            {/*  }*/}
-            {/*  label={*/}
-            {/*    <Typography color={errors.acceptTerms ? "error" : "inherit"}>*/}
-            {/*      I have read and agree to the Terms **/}
-            {/*    </Typography>*/}
-            {/*  }*/}
-            {/*/>*/}
           </form>
         </div>
         <div className="btn-container-center">
@@ -219,6 +204,13 @@ export default function Collection() {
       </CardContent>
     </React.Fragment>
   );
+  const cardAddVideo = (
+    <React.Fragment>
+      <CardContent>
+        <VideoForm />
+      </CardContent>
+    </React.Fragment>
+  );
   return (
     <>
       <PageTitle title="Toutes les collections" />
@@ -235,7 +227,7 @@ export default function Collection() {
             }} variant="outlined">Detail</Button>
           )
         }
-        <Button variant="outlined">Add Videos</Button>
+        <Button onClick={handleDialogAddVideo} variant="outlined">Add Videos</Button>
       </Stack>
       <Grid container spacing={4}>
         <Grid item xs={12}>
@@ -256,33 +248,9 @@ export default function Collection() {
           />
         </Grid>
       </Grid>
-      <Dialog
-        fullScreen
-        open={open}
-        onClose={handleDialog}
-        TransitionComponent={Transition}
-      >
-        <AppBar sx={{ position: "relative" }}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleDialog}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Back
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <List>
-          <Card className="mt-60" variant="outlined">
-            {card}
-          </Card>
-        </List>
-      </Dialog>
-    </>
+      <DialogCollection card={cardAddVideo} open={openAddVideo} handleDialog={handleDialogAddVideo} transition={Transition} />
+   
+      <DialogCollection card={card} open={open} handleDialog={handleDialog} transition={Transition} />
+       </>
   );
 }

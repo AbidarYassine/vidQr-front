@@ -38,7 +38,6 @@ const structure = [
     icon: <SupervisedUserCircle />,
   },
   { id: 2, label: "Collections", link: "/app/collections", icon: <SupervisorAccount /> },
-  { id: 3, label: "Add video", link: "/app/addvideo", icon: <SupervisorAccount /> },
 ];
 
 function Sidebar({ location }) {
