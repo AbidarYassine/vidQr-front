@@ -6,7 +6,7 @@ import "./collectionDetail.css";
 import { Card, CardContent, CircularProgress, Container, Grid, Typography } from "@mui/material";
 
 
-const api = "http://localhost:8080/vidqr/collections/";
+const api = "http://localhost:8081/vidqr/collections/";
 
 const CollectionDetail = () => {
   const [collection, setCollection] = useState({});
