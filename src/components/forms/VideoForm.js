@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
-import '../../styles/main/index.css';
+import './style.css';
 import { Button, Divider, IconButton, InputLabel, MenuItem, Select } from '@material-ui/core';
 import ImageUpload from 'image-upload-react'
 import { doc } from 'prettier';

@@ -16,12 +16,15 @@ import Sidebar from "../Sidebar";
 // pages
 import Dashboard from "../../pages/dashboard";
 import Users from "../../pages/users/users";
-import Collection from "../../pages/Professor/Collection";
+import Collection from "../../pages/Collection/Collection";
 import IconsPage from "../../pages/icons";
 
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
+
+import CollectionDetail from "../Collection/CollectionDetail";
+
 import VideoForm from "../forms/VideoForm";
 
 
@@ -44,7 +47,8 @@ function Layout(props) {
           <Switch>
             <Route path="/app/dashboard" component={Dashboard} />
             <Route path="/app/users" component={Users} />
-            <Route path="/app/collections" component={Collection} />
+            <Route exact path="/app/collections" component={Collection} />
+            <Route exact path="/app/detail/collections/:id" component={CollectionDetail} />
             <Route path="/app/addvideo" component={VideoForm} />
             <Route path="/app/icons" component={IconsPage} />
           </Switch>

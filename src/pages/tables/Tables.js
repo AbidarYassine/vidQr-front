@@ -1,6 +1,4 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
 import MUIDataTable from "mui-datatables";
 
 // components
@@ -10,6 +8,7 @@ import Table from "../dashboard/components/Table/Table";
 
 // data
 import mock from "../dashboard/mock";
+import { Grid, makeStyles } from "@mui/material";
 
 const datatableData = [
   ["Joe James", "Example Inc.", "Yonkers", "NY"],
