@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import QRCode from "./QrCode";
 import "./collectionDetail.css";
-import { Card, CardContent, CircularProgress, Container, Typography } from "@mui/material";
+import { Card, CardContent, CircularProgress, Container, Grid, Typography } from "@mui/material";
 
 
 const api = "http://localhost:8080/vidqr/collections/";
@@ -26,18 +26,16 @@ const CollectionDetail = () => {
   }, []);
   if (isLoading) return (
     <>
-      <h2>Loading ...</h2>
       <CircularProgress size={30}
                         sx={{
                           color: "#06b0ac",
                           zIndex: 1,
                         }} />
+      <h2>Loading ...</h2>
     </>
   );
   return (
     <>
-
-
       <Container className="container">
         <div className="collection-image-container">
           <img src={collection?.image_src} alt="No Image" />
@@ -50,6 +48,18 @@ const CollectionDetail = () => {
           <CardContent>
             <Typography>{collection?.description}</Typography>
           </CardContent>
+          <Grid className="container" spacing={3}>
+            {
+              collection?.videos?.map(video => {
+                return (
+                  <Grid className="container-video" item xs={6} md={4}>
+                    <img src={video.image_src} alt="" />
+                    <h3 style={{ justifyContent: "center" }}>{video.name}</h3>
+                  </Grid>
+                );
+              })
+            }
+          </Grid>
         </Card>
       </Container>
       <QRCode id_collection={collection.id} videos={collection?.videos} libelle={collection.name} />

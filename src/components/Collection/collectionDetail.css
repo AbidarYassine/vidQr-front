@@ -41,3 +41,18 @@
     width: 100% !important;
     height: 35vh !important;
 }
+
+.progress-center {
+    justify-content: center !important;
+}
+
+.container-video {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column !important;
+}
+
+.container-video img {
+    width: 50% !important;
+}
