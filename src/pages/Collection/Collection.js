@@ -34,8 +34,7 @@ import VideoForm from "../../components/forms/VideoForm";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-const url = "https://fakestoreapi.com/products/";
-const api = "http://localhost:8080/vidqr/collections/";
+const api = "https://gateway-service-api.herokuapp.com/vidqr/collections/";
 
 export default function Collection() {
 
@@ -66,10 +65,14 @@ export default function Collection() {
   const handleDialogAddVideo = () => {
     setOpenAddVideo(!openAddVideo);
   };
-  const getData = () => {
-    fetch(api)
-      .then(res => res.json())
-      .then(json => setCollections(json));
+  const getData = async () => {
+    const token = localStorage.getItem("token");
+    const res = await axios.get(api, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+    setCollections(res.data);
   };
   const columns = [
     {
@@ -188,13 +191,13 @@ export default function Collection() {
           }} type="submit" onClick={handleSubmit(onSubmit)} className="btn btn-block">
             {
               isLoading ? <CircularProgress size={30}
-                sx={{
-                  color: "#dce9dd",
-                  position: "absolute",
-                  top: 4,
-                  left: 336,
-                  zIndex: 1,
-                }} />
+                                            sx={{
+                                              color: "#dce9dd",
+                                              position: "absolute",
+                                              top: 4,
+                                              left: 336,
+                                              zIndex: 1,
+                                            }} />
                 : (
                   <p>Save</p>
                 )
@@ -248,7 +251,8 @@ export default function Collection() {
           />
         </Grid>
       </Grid>
-      <DialogCollection card={cardAddVideo} open={openAddVideo} handleDialog={handleDialogAddVideo} transition={Transition} />
+      <DialogCollection card={cardAddVideo} open={openAddVideo} handleDialog={handleDialogAddVideo}
+                        transition={Transition} />
 
       <DialogCollection card={card} open={open} handleDialog={handleDialog} transition={Transition} />
     </>
