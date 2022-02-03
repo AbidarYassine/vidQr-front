@@ -54,7 +54,7 @@ async function loginUser(dispatch, login, password, history, setIsLoading, setEr
   setError(false);
   setIsLoading(true);
 
-  const res = await axios.post("https://gateway-service-api.herokuapp.com/users/login", { username: login, password });
+  const res = await axios.post("https://localhost:8081/users/login", { username: login, password });
   console.log("response ", res);
   if (res.status >= 200 && res.status <= 299) {
     localStorage.setItem("token", res.data.token);
