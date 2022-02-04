@@ -56,7 +56,7 @@ async function loginUser(dispatch, login, password, history, setIsLoading, setEr
   setError(false);
   setIsLoading(true);
   try {
-    const res = await axios.post("https://auth-security.herokuapp.com/users/login", { username: login, password });
+    const res = await axios.post("http://localhost:9090/users/login", { username: login, password });
     if (res.status >= 200 && res.status <= 299) {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("username", res.data.user.username);
