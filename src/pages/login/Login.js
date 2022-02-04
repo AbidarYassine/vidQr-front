@@ -20,13 +20,15 @@ import logo from "./logo.svg";
 import google from "../../images/google.svg";
 
 // context
-import { useUserDispatch, loginUser } from "../../context/UserContext";
+import { useUserDispatch, loginUser, useUserState } from "../../context/UserContext";
+import { Alert } from "@mui/material";
 
 function Login(props) {
   const classes = useStyles();
 
   // global
   const userDispatch = useUserDispatch();
+  let { isAuthenticated } = useUserState();
 
   // local
   const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +37,7 @@ function Login(props) {
   const [nameValue, setNameValue] = useState("");
   const [loginValue, setLoginValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const [isLogin, SetIsLogin] = useState();
+  const [clicked, setIsClicked] = useState(false);
   const loginMethod = () => {
     loginUser(
       userDispatch,
@@ -44,10 +46,8 @@ function Login(props) {
       props.history,
       setIsLoading,
       setError,
-    ).then(res => {
-      console.log("res ", res);
-      setIsLoading(res);
-    });
+    );
+    setIsClicked(true);
   };
 
   return (
