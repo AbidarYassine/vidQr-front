@@ -15,6 +15,8 @@ const QRCode = ({ id_collection, libelle, collection }) => {
     try {
       const response = await qrcode.toDataURL(getUrlsVideos());
       setImageUrl(response);
+      console.log(response);
+      
     } catch (error) {
       console.log(error);
     }
@@ -31,7 +33,7 @@ const QRCode = ({ id_collection, libelle, collection }) => {
                         color="primary" onClick={() => generateQrCode()}>Generate</Button>
                 <div className="qr-image-container">
                   {imageUrl ? (
-                    <a href={imageUrl} download>
+                    <a href={imageUrl} download="qrCode.png">
                       <img title="Download the QR Code" src={imageUrl} alt="img" />
                     </a>) : null}
                 </div>
