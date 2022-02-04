@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import QRCode from "./QrCode";
 import "./collectionDetail.css";
-import { Card, CardContent, CircularProgress, Container, Grid, Typography } from "@mui/material";
+import { Button, Card, CardContent, CircularProgress, Container, Grid, Typography } from "@mui/material";
 
 
 const api = "http://localhost:8080/vidqr/collections/";
 
 const CollectionDetail = () => {
+  const history = useHistory();
   const [collection, setCollection] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   let { id } = useParams();
@@ -34,6 +35,11 @@ const CollectionDetail = () => {
       <h2>Loading ...</h2>
     </>
   );
+  const forwardToDetail = (name) => {
+    console.log(name)
+    /* eslint no-restricted-globals:0 */
+
+  }
   return (
     <>
       <Container className="container">
@@ -52,9 +58,14 @@ const CollectionDetail = () => {
             {
               collection?.videos?.map(video => {
                 return (
-                  <Grid className="container-video" item xs={6} md={4}>
-                    <img src={video.image_src} alt="" />
+                  <Grid key={video.name} className="container-video" item xs={6} md={4}>
+                    <img  onClick={() => { Redirect(`/app/detail/video/${video.name}`) }} src={video.image_src} alt="" />
                     <h3 style={{ justifyContent: "center" }}>{video.name}</h3>
+                    <Button onClick={() => {
+                      console.log(1223322)
+                        history.push(`/app/detail/collection/${collection.id}/video/${video.name}`);
+                   
+                    }} variant="outlined">Detail</Button>
                   </Grid>
                 );
               })

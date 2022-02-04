@@ -26,6 +26,7 @@ import { useLayoutState } from "../../context/LayoutContext";
 import CollectionDetail from "../Collection/CollectionDetail";
 
 import VideoForm from "../forms/VideoForm";
+import VideoDetails from "../Collection/Video/VideoDetails";
 
 
 function Layout(props) {
@@ -51,6 +52,7 @@ function Layout(props) {
             <Route exact path="/app/detail/collections/:id" component={CollectionDetail} />
             <Route path="/app/addvideo" component={VideoForm} />
             <Route path="/app/icons" component={IconsPage} />
+            <Route path="/app/detail/collection/:collection/video/:name" component={VideoDetails} />
           </Switch>
         </div>
       </>

@@ -56,3 +56,9 @@
 .container-video img {
     width: 50% !important;
 }
+
+
+.card-media-video{
+width: 50vw;
+height: 40vh;
+}
