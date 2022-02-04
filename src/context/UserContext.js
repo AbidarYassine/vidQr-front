@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import { Alert } from "@mui/material";
 
 const UserStateContext = React.createContext();
 const UserDispatchContext = React.createContext();
@@ -71,13 +70,11 @@ async function loginUser(dispatch, login, password, history, setIsLoading, setEr
       dispatch({ type: "LOGIN_FAILURE" });
       setError(true);
       setIsLoading(false);
-      return false;
     }
   } catch (e) {
     dispatch({ type: "LOGIN_FAILURE" });
     setError(true);
     setIsLoading(false);
-    return false;
   }
 
 }

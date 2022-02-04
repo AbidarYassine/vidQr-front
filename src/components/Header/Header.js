@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -67,6 +67,15 @@ export default function Header(props) {
   var [isNotificationsUnread, setIsNotificationsUnread] = useState(true);
   var [profileMenu, setProfileMenu] = useState(null);
   var [isSearchOpen, setSearchOpen] = useState(false);
+  const [user, setUser] = useState({
+    username: "",
+    role: "",
+  });
+  useEffect(() => {
+    const username = localStorage.getItem("username");
+    const role = localStorage.getItem("role");
+    setUser({ ...user, username, role });
+  }, []);
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
@@ -174,15 +183,15 @@ export default function Header(props) {
         >
           <div className={classes.profileMenuUser}>
             <Typography variant="h4" weight="medium">
-              John Smith
+              Welcome {user?.username?.toUpperCase()}
             </Typography>
             <Typography
               className={classes.profileMenuLink}
               component="a"
               color="primary"
-              href="https://flatlogic.com"
+              href="#"
             >
-              Flalogic.com
+              Role : {user.role}
             </Typography>
           </div>
           <MenuItem
@@ -191,33 +200,16 @@ export default function Header(props) {
               classes.headerMenuItem,
             )}
           >
-            <AccountIcon className={classes.profileMenuIcon} /> Profile
+            <div className={classes.profileMenuUser}>
+              <Typography
+                className={classes.profileMenuLink}
+                color="primary"
+                onClick={() => signOut(userDispatch, props.history)}
+              >
+                Sign Out
+              </Typography>
+            </div>
           </MenuItem>
-          <MenuItem
-            className={classNames(
-              classes.profileMenuItem,
-              classes.headerMenuItem,
-            )}
-          >
-            <AccountIcon className={classes.profileMenuIcon} /> Tasks
-          </MenuItem>
-          <MenuItem
-            className={classNames(
-              classes.profileMenuItem,
-              classes.headerMenuItem,
-            )}
-          >
-            <AccountIcon className={classes.profileMenuIcon} /> Messages
-          </MenuItem>
-          <div className={classes.profileMenuUser}>
-            <Typography
-              className={classes.profileMenuLink}
-              color="primary"
-              onClick={() => signOut(userDispatch, props.history)}
-            >
-              Sign Out
-            </Typography>
-          </div>
         </Menu>
       </Toolbar>
     </AppBar>
