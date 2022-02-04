@@ -23,7 +23,7 @@ const QRCode = ({ id_collection, libelle, collection }) => {
     <>
       <Container className="container">
         <Card>
-          <h2 className="title">Generate Download QR For collection of {libelle || "Default name"}</h2>
+          <h2 className="title">Generate Download QR For {libelle || "Default name"}</h2>
           <CardContent>
             <Grid container spacing={2}>
               <Grid className="grid-center" item xl={4} lg={4} md={6} sm={12} xs={12}>
