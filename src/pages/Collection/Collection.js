@@ -211,7 +211,7 @@ export default function Collection() {
   const cardAddVideo = (
     <React.Fragment>
       <CardContent>
-        <VideoForm />
+        <VideoForm setOpen={setOpenAddVideo}/>
       </CardContent>
     </React.Fragment>
   );

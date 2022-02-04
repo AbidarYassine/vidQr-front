@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import './style.css';
-import { Button, Divider, IconButton, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { Button, CircularProgress, Divider, IconButton, InputLabel, MenuItem, Select } from '@material-ui/core';
 import ImageUpload from 'image-upload-react'
 import { doc } from 'prettier';
 import axios from "axios";
@@ -13,8 +13,10 @@ import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 
-export default function VideoForm() {
+export default function VideoForm({setOpen}) {
+    const history = useHistory()
     //handle image uploader
     const [imageSrc, setImageSrc] = React.useState("")
 
@@ -88,6 +90,7 @@ export default function VideoForm() {
         const { name, collection } = video;
         await axios.post(api_url_video + "savevideo/idCollection/" + collection, { name, url, image_src });
         setIsLoading(false);
+        setOpen(false)
     };
     //handle form
     const validationSchema = Yup.object().shape({
@@ -215,7 +218,21 @@ export default function VideoForm() {
 
 
                         <div className='form-container-fields '>
-                            <Button type='submit' onClick={handleSubmit(handleSubmitForm)} className=' mb-d1 submit-form-button' variant="contained" color='red'>Save video</Button>
+                            <Button style={{
+            marginTop: "40px",
+          }} type='submit' onClick={handleSubmit(handleSubmitForm)} className="btn btn-block" variant="contained" color='red'>{
+              isLoading ? <CircularProgress style={{ color: "#FFF" }} size={30}
+                                            sx={{
+                                              color: "#FFF",
+                                              position: "absolute",
+                                              top: 40,
+                                              left: 336,
+                                              zIndex: 100,
+                                            }} />
+                : (
+                  <p>Save</p>
+                )
+            }</Button>
                         </div>
                     </form>
                 </Box>
