@@ -59,7 +59,7 @@ const CollectionDetail = () => {
               collection?.videos?.map(video => {
                 return (
                   <Grid key={video.name} className="container-video" item xs={6} md={4}>
-                    <img  onClick={() => { Redirect(`/app/detail/video/${video.name}`) }} src={video.image_src} alt="" />
+                    <img id="image-preview" onClick={() => { Redirect(`/app/detail/video/${video.name}`) }} src={video.image_src} alt="" />
                     <h3 style={{ justifyContent: "center" }}>{video.name}</h3>
                     <Button onClick={() => {
                       console.log(1223322)

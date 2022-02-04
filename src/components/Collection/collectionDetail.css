@@ -62,3 +62,7 @@
 width: 50vw;
 height: 40vh;
 }
+#image-preview{
+    width: 150px !important;
+    height: 150px !important;
+}

@@ -81,7 +81,6 @@ export default function VideoForm() {
 
     const handleSubmitForm = async (e) => {
         setIsLoading(true);
-        e.preventDefault();
         let image_src = await toBase64(video.image_src);
         let url = await toBase64(video.url);
         image_src = image_src.toString().replace(/^data:(.*,)?/, "");
@@ -95,8 +94,6 @@ export default function VideoForm() {
         name: Yup.string().required("name is required"),
         description: Yup.string().required("description is required"),
         collections: Yup.string().required("please select a collection"),
-        imageSrc: Yup.string().required("please upload a thumbnail for the video"),
-        videoForm: Yup.mixed().required("please upload a video"),
     });
 
     const {
@@ -174,8 +171,6 @@ export default function VideoForm() {
 
 
                             <ImageUpload
-                                {...register("imageSrc")}
-                                error={errors.imageSrc ? true : false}
                                 name="imageSrc"
                                 id="image-upload"
                                 className="image-uploader"
@@ -197,8 +192,7 @@ export default function VideoForm() {
 
 
                             <input
-                            ref={register("videoForm")}
-                                error={errors.videoForm ? true : false}
+                            
                                 name='video'
                                 accept="video/*"
                                 capture="camcorder"
@@ -215,9 +209,6 @@ export default function VideoForm() {
                                 <label className='image-upload-title' htmlFor="image-upload">{link}
                                 </label>
                             </label>
-                            <Typography variant="inherit" className="text-danger">
-                                {errors.videoForm?.message}
-                            </Typography>
 
                         </div>
 
