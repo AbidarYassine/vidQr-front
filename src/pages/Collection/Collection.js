@@ -248,6 +248,15 @@ export default function Collection() {
                 setSelectedItem(rowsSelected);
                 console.log("selected item ", selectedItem);
               },
+              onRowsDelete: async (e)=>{
+                const token = localStorage.getItem("token");
+                console.log("9alwa",collections[e.data[0].index].id)
+                const res = await axios.delete(api + "delete/id/" + collections[e.data[0].index].id ,  {
+                  headers: {
+                    "Authorization": `Bearer ${token}`,
+                  },
+                });
+              }, 
             }}
           />
         </Grid>
